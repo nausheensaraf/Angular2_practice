@@ -1,0 +1,61 @@
+<div class="container">
+    <div class="row">
+        <form [formGroup] = "form" (ngSubmit) = "signup()" novalidate>
+        <!-- we need to tell angular that we have created FormGroup and its FormControl explicitly,
+        so angulaar will no longer create them for us 
+        apply formGroup directive and bind it to the property in the component that represents the FormGroup,
+        we had named this property as "form"
+        -->
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input 
+                    id="username"
+                    type="text"
+                    class="form-control"
+                    formControlName="username">
+
+                    <div *ngIf="form.controls.username.pending">Checking for uniqueness...</div>
+
+                <!--now we need to associate each input field with a FormControl object,
+                we use th ngModel directive-->
+                <div *ngIf = "form.controls.username.touched && form.controls.username.errors">
+                    <div
+                        *ngIf = "form.controls.username.errors.invalidLogin"
+                        class="alert alert-danger">
+                        Username or password is invalid.
+                    </div>
+                    <div
+                        *ngIf = "form.controls.username.errors.required"
+                        class="alert alert-danger">
+                            Username is required.
+                    </div>
+                    <div
+                        *ngIf = "form.controls.username.errors.cannotContainSpace"
+                        class="alert alert-danger">
+                        Username cannot contain space
+                    </div>
+                    <div
+                        *ngIf = "form.controls.username.errors.shouldBeUnique"
+                        class="alert alert-danger">
+                        this username is already taken.
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input 
+                    id="password"
+                    type="text"
+                    class="form-control"
+                    formControlName="password">
+                <div
+                    class="alert alert-danger"
+                    *ngIf = "form.controls.password.touched && form.controls.password.errors.required">
+                        Password is required.
+                </div>
+            </div>
+            <button class="btn btn-primary" type="submit">Sign Up</button>
+        </form>
+    </div>
+</div>

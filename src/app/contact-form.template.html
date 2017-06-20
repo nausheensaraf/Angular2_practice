@@ -1,0 +1,89 @@
+<form #f="ngForm" (ngSubmit)="onSubmit(f.form)">
+    
+    <!--we pass reference to FormGroup object to our onSubmit() method
+    for this, we declare a temporary variable, for example "f" and set it to ngForm:-
+    #f = "ngForm"......this ngForm directive has a property called "form"
+    -->
+    <div class="form-group">
+        <label for="firstName">First Name</label>
+        <!--set the "for" attribute to the "id" of the input..for improving accessibility-->
+        <input 
+            ngModel 
+            name=“firstName” 
+            #firstName="ngModel" 
+            (change)="log(firstName)" 
+            id="firstName" 
+            type="text" 
+            class="form-control">
+        <!--in the log() wen need to pass a reference to the ngModel directive,
+        to do this, we need to create a temporary local variable and set it to the ngModel directive as:-
+        #firstName= "ngModel"and this variable holds a refernce to the ngModel directive
+        now we will pass this variable to our log() method-->
+    </div>
+    <div class="form-group">
+        <label for="lastName">Last Name</label>
+        <input 
+            name="lastName" 
+            ngModel 
+            #lastName="ngModel" 
+            type="text" 
+            class="form-control" 
+            required
+            minlength="3">
+
+        <div *ngIf="lastName.touched && lastName.errors">
+                {{ lastName.errors | json }}
+            <div 
+                class = "alert alert-danger" 
+                *ngIf = "lastName.errors.required">
+                Last name is required.
+            </div>
+            <div 
+                    class = "alert alert-danger" 
+                *ngIf = "lastName.errors.minlength">
+                Last name should be of minimum {{ lastName.errors.minlength.requiredLength }} characters.
+            </div>
+        </div>
+        <!--we are using  "requiredLength"   to dynamically render the minimun number of characters required -->
+
+        <!--<div 
+            class = "alert alert-danger"
+            *ngIf="lastName.touched && !lastName.valid">
+            lastName is required.
+        </div>-->
+
+        <!--<div 
+            class = "alert alert-danger" 
+            *ngIf = "lastName.touched && lastName.errors.required">
+            Last name is required.
+        </div>
+        <div 
+            class = "alert alert-danger" 
+            *ngIf = "lastName.touched && lastName.errors.minlength">
+            Last name should be of minimum 3 characters.
+        </div>-->
+    </div>
+    <div class="form-group">
+        <label for="comment">Comment</label>
+        <textarea 
+            name="comment" 
+            ngModel
+            #comment="ngModel"
+            id="comment" 
+            cols="30" 
+            rows="10" 
+            class="form-control"
+            required>
+        </textarea>
+        <div 
+            class = "alert alert-danger"
+            *ngIf="comment.touched && !comment.valid">
+            Comment is required.
+        </div>
+    </div>
+    <button class="btn btn-primary" type="submit" [disabled] = "!f.valid" >Submit</button>
+    <!--we are binding the "disabled" property of this button to an expression
+    in this expression, we need to see if the form  is valid or not...
+    we can ask "f (temporary variable form the form tag)" if this form is valid or not....
+    i.e., we want the button to be disabled if "f.valid"" is false-->
+</form>

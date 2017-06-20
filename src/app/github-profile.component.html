@@ -1,0 +1,19 @@
+<!--used ngIf to dynamically render the loading icon if the component is loading-->
+<i *ngIf="isLoading" class="fa fa-spinner fa-spin fa-3x"></i>
+
+<!--profile section-->
+<h2>@{{ user.login }}</h2>
+<img class = "avatar" src = "{{ user.avatar_url }}">
+
+<!--followers section-->
+<h3>Followers</h3>
+<div *ngFor = "let follower of followers" class="media">
+    <div class="media-left">
+        <a href = "#">
+            <img class="media-object avatar" src="{{ follower.avatar_url }}" alt = "...">
+        </a>
+    </div>
+    <div class="media-body">
+        <h4 class="media-heading">{{ follower.login }}</h4>
+    </div>
+</div>

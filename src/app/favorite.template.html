@@ -1,0 +1,38 @@
+<!--<i 
+    class ="fa"
+    [class.fa-star-o]="!isFavorite"
+    [class.fa-star]= "isFavorite"
+    (click)="onClick()">
+</i> -->
+
+<!--Instead of the above style, we can use ngClass directive also like :- -->
+
+<i
+    class = "fa"
+    [ngClass] = "
+        {
+            'fa-star-o': !isFavorite,
+            'fa-star': isFavorite
+        }"
+    (click)="onClick()">
+</i>
+
+
+<!--<button
+    [style.backgroundColor] = "canSave ? 'blue' : 'limegreen'" 
+    [style.color] = "canSave ? 'white' : 'darkgreen'" 
+    [style.fontWeight] = "canSave ? 'bold' : ' normal'" 
+>Click Me
+</button>-->
+
+<!--we can bind ngStyle to an object that includes a bunch of key-value pairs -->
+
+<button
+    [ngStyle] = "{
+        backgroundColor: canSave ? 'blue' : 'pink',
+        color: canSave ? 'white' : 'darkgreen',
+        fontWeight: canSave ? 'normal' : ' bold'
+    }"
+    (click) = "btnClk()"
+ >Click Me
+</button>
